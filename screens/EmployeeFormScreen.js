@@ -49,7 +49,7 @@ const EmployeeFormScreen = () => {
               onChangeText={handleChange("name")}
               onBlur={handleBlur("name")}
               value={values.name}
-              placeholder="John Doe"
+              placeholder="Type your name here ..."
             />
             {errors.name && touched.name && (
               <Text style={styles.error}>{errors.name}</Text>
@@ -63,7 +63,7 @@ const EmployeeFormScreen = () => {
               onChangeText={handleChange("email")}
               onBlur={handleBlur("email")}
               value={values.email}
-              placeholder="john@example.com"
+              placeholder="youremail@example.com"
             />
             {errors.email && touched.email && (
               <Text style={styles.error}>{errors.email}</Text>
