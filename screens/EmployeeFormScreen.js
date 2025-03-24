@@ -30,7 +30,6 @@ const EmployeeFormScreen = () => {
         }}
         validationSchema={EmployeeSchema}
         onSubmit={(values) => {
-          console.log("Employee Info:", values);
           alert("Employee information submitted!");
         }}
       >
