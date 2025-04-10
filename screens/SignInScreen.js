@@ -1,7 +1,8 @@
 import React from "react";
-import { View, Text, TextInput, Button, StyleSheet } from "react-native";
+import { Alert, View, Text, TextInput, Button, StyleSheet } from "react-native";
 import { Formik } from "formik";
 import * as Yup from "yup";
+import { signIn } from "../firebase/auth";
 
 const SignInSchema = Yup.object().shape({
   email: Yup.string().email("Invalid email").required("Required"),
@@ -11,15 +12,32 @@ const SignInSchema = Yup.object().shape({
 });
 
 const SignInScreen = () => {
+  const handleSignIn = async (values, { setSubmitting }) => {
+    try {
+      await signIn(values.email, values.password);
+      Alert.alert("Success", "Signed in successfully!", [{ text: "OK" }]);
+    } catch (error) {
+      console.error("SignIn error:", error);
+
+      if (error.code === "auth/user-not-found") {
+        Alert.alert("Error", "No user found with this email.");
+      } else if (error.code === "auth/wrong-password") {
+        Alert.alert("Error", "Incorrect password.");
+      } else {
+        Alert.alert("Error", error.message);
+      }
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Sign In</Text>
       <Formik
         initialValues={{ email: "", password: "" }}
         validationSchema={SignInSchema}
-        onSubmit={(values) => {
-          alert("Sign In Successful!");
-        }}
+        onSubmit={handleSignIn}
       >
         {({
           handleChange,

@@ -14,12 +14,14 @@
     },
     "ios": {
       "supportsTablet": true
+      // "googleServicesFile": "./firebase/GoogleService-Info.plist"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       }
+      // "googleServicesFile": "./firebase/google-services.json"
     },
     "web": {
       "favicon": "./assets/favicon.png"
