@@ -2,6 +2,7 @@ import React from "react";
 import { View, Text, TextInput, Button, StyleSheet } from "react-native";
 import { Formik } from "formik";
 import * as Yup from "yup";
+import { saveEmployee } from "../firebase/employees";
 
 const EmployeeSchema = Yup.object().shape({
   name: Yup.string()
@@ -17,6 +18,15 @@ const EmployeeSchema = Yup.object().shape({
 });
 
 const EmployeeFormScreen = () => {
+  const handleEmployeeSubmit = async (values, { resetForm }) => {
+    try {
+      const docId = await saveEmployee(values);
+      alert("Employee added with ID: " + docId);
+      resetForm();
+    } catch (error) {
+      alert("Error adding employee. Please try again.");
+    }
+  };
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Employee Information</Text>
@@ -29,9 +39,7 @@ const EmployeeFormScreen = () => {
           department: "",
         }}
         validationSchema={EmployeeSchema}
-        onSubmit={(values) => {
-          alert("Employee information submitted!");
-        }}
+        onSubmit={handleEmployeeSubmit}
       >
         {({
           handleChange,
